@@ -1,0 +1,42 @@
+{
+	"part_names" : [
+                "m_temp1",
+                "m_temp2",
+                "m_temp3",
+                "m_head"
+            ],
+
+	"symmetry" : {
+		"m_temp1" : "m_temp1",
+        "m_temp2" : "m_temp2",
+        "m_temp3" : "m_temp3",
+        "m_head" : "m_head"
+	},
+            
+    "ancestors" : {
+                "m_temp1" : "m_root",
+                "m_temp2" : "m_temp1",
+                "m_temp3" : "m_temp2",
+                "m_head" : "m_temp3"
+
+    },
+    "influence" : {
+        "m_temp1" : [ "m_root","m_temp2","m_temp3","m_head" ],
+        "m_temp2" : [ "m_temp1","m_temp3","m_head","m_root" ],
+        "m_temp3" : [ "m_temp2","m_temp1","m_root","m_head" ],
+        "m_head" : [ "m_temp3","m_temp2","m_temp1","m_root" ]
+    },
+    
+    "rigid" :
+    [
+        "m_temp2",
+        "m_temp3",
+        "m_head"
+    ],
+
+    "halfrigid" :
+    [
+        "m_temp2",
+        "m_temp3"
+    ]
+}

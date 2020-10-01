@@ -1,0 +1,32 @@
+0 m_head 
+1 m_root m_temp1 
+2 m_head 
+3 m_root m_temp1 
+4 m_head 
+5 m_root m_temp1 
+6 m_head 
+7 m_root m_temp1 
+8 m_temp2 m_temp3 
+9 m_temp2 m_temp3 
+10 m_temp2 m_temp3 
+11 m_temp2 m_temp3 
+12 m_temp3 m_head 
+13 m_temp3 m_head 
+14 m_temp3 m_head 
+15 m_temp3 m_head 
+16 m_temp1 m_temp2 
+17 m_temp1 m_temp2 
+18 m_temp1 m_temp2 
+19 m_temp1 m_temp2 
+20 m_temp1 
+21 m_temp1 
+22 m_temp1 
+23 m_temp1 
+24 m_temp2 
+25 m_temp2 
+26 m_temp2 
+27 m_temp2 
+28 m_temp3 
+29 m_temp3 
+30 m_temp3 
+31 m_temp3 
