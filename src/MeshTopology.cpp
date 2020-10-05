@@ -861,7 +861,7 @@ void filter(Matrix3X* data, Matrix3X* normal, const Matrix3X& model) {
 	typedef nanoflann::KDTreeEigenMatrixAdaptor<MatrixX>  my_kd_tree_t;
 	std::unique_ptr<my_kd_tree_t> mat_index;
 	MatrixX input = model.transpose();
-	mat_index.reset(new my_kd_tree_t(input, 10));
+	mat_index.reset(new my_kd_tree_t(6, input, 10));
 	mat_index->index->buildIndex();
 	
 	Scalar out_dists_sqr = -1.0f;

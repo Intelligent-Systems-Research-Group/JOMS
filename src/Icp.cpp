@@ -8,7 +8,7 @@ Icp::Icp(Matrix3X cloud) {
 		data(j,1) = cloud(1,j);
 		data(j,2) = cloud(2,j);
 	}
-	mat_index.reset(new my_kd_tree_t(data, 10));
+	mat_index.reset(new my_kd_tree_t(3, data, 10));
 	mat_index->index->buildIndex();	
 }
 

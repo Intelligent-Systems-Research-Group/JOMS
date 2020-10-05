@@ -174,7 +174,7 @@ void SurfaceState::SingleState::setCurrentModel(Matrix3X& pts, Matrix3X& localPt
 
     //std::cout << "Start Tree Building" << std::endl;
     if(rebuild_tree) {
-        mat_index.reset(new my_kd_tree_t(data, 10));
+        mat_index.reset(new my_kd_tree_t(6, data, 10));
 	    mat_index->index->buildIndex();
     }
     //std::cout << "End Tree Building" << std::endl;

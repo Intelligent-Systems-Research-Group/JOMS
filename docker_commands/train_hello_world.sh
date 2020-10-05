@@ -12,21 +12,22 @@ rm -rf tmp
 mkdir tmp
 
 export OMP_NUM_THREADS=4
-
-q+=" -b $DATASET_FOLDER -p 100 -a 999 -e 90"
+q=""
+q+=" -b $DATASET_FOLDER -p 10 -a 999 -e 90"
 
 device=0
 ndeformjoints=0
 label_term=.5
 lambda=3
 robust_radius=1.5
+m2d=0
 shape_reg=.5
 model_reg=2
 dropoff=5
 cont_iter=2  #300
 npersons=3  #15
 nscans=3
-q=" -j ${cont_iter} -r ${cont_iter} -d "
+q+=" -j ${cont_iter} -r ${cont_iter} -d "
 q+="experiments/data_config_hello_3p3s.ini"
 q+=" -D ${ndeformjoints} "
 q+=" -T template_hello_world "
