@@ -1,0 +1,48 @@
+{
+    "1"    : "Nose",
+    "658"  : "RBigToe",
+    "637"  : "RSmallToe",
+    "222"  : "LBigToe",
+    "198"  : "LSmallToe",
+    "1141" : "RThumb4FingerTip",
+    "876"  : "RIndex4FingerTip",
+    "904"  : "RMiddle4FingerTip",
+    "874"  : "RRing4FingerTip",
+    "907"  : "RPinky4FingerTip",
+
+    "1165" : "LThumb4FingerTip",
+    "1011" : "LIndex4FingerTip",
+    "1038" : "LMiddle4FingerTip",
+    "1320" : "LRing4FingerTip",
+    "1041" : "LPinky4FingerTip",
+
+
+    "522" : "REyeBrow0",
+    "521" : "REyeBrow1",
+	"506" : "REyeBrow2",
+	"505" : "REyeBrow3",
+    "66"  : "LEyeBrow3",
+    "67"  : "LEyeBrow2",
+    "82"  : "LEyeBrow1",
+    "83"  : "LEyeBrow0",
+
+
+    "7"   : "NoseUpper0", 
+	"4"   : "NoseUpper1",
+	"3"   : "NoseUpper2", 
+    "29"  : "NoseLower4", 
+	"30"  : "NoseLower2",
+	"2"   : "NoseLower2",
+ 	"469" : "NoseLower1", 
+	"468" : "NoseLower0",
+
+
+    "568" : "OMouth0",
+	"566" : "OMouth2",
+	"134" : "OMouth3",
+	"127" : "OMouth4",
+    "129" : "OMouth6",
+	"132" : "OMouth8",
+	"133" : "OMouth9",
+	"571" : "OMouth10"
+}

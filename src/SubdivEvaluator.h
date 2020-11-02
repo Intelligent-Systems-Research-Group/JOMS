@@ -113,6 +113,8 @@ struct SubdivEvaluator {
 	  Matrix3X* out_Sv = NULL,
       bool printDebug = false
   ) const; 
+
+
 	//
 	//triplets_t* out_dSudX,
 	//	  triplets_t* out_dSvdX,

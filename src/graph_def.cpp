@@ -1068,7 +1068,11 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
                 inputData.addUnknown(val);
                 localPts.col(i) = localPt;
             }
-            surfaceState.setCurrentModel(k, T, localPts, true); //false
+			int current_person = corpora.scan_to_person_id[k];
+			if(corpora.person_fist[current_person])
+            	surfaceState.setCurrentModel(k, T, localPts, excludedVertices, true); //false
+			else
+				surfaceState.setCurrentModel(k, T, localPts, noExcludedVertices, true);				
 
             //saveObj(std::string("out/gtmeth")+ std::to_string(k) +std::string(".obj"),  top,  &T);
             //dumpCloudA(std::string("out/p"), k, localPts);
@@ -1244,7 +1248,13 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
                 eval->normalize(fidx, pt, &pidx); //is that  required?
                 //set by reversed ICP
                 edge[offset3d++] = barriers.pointBase + 2*i*ip.npoints;
-                edge[offset3d++] = barriers.singleOne;
+				int joint = closestDeformJoints(0,v);
+				std::string joint_name = skeleton.getJoint(joint).first;
+				if( joint_name == "m_lhand" || joint_name == "m_rhand") {
+					edge[offset3d++] = barriers.singleZero;
+				} else {
+					edge[offset3d++] = barriers.singleOne;
+				}
                 edge[offset3d++] = barriers.singleOne; //switch to indicate reverse
                 edge[offset3d++] = barriers.vertexLabel + v;
 
@@ -2644,7 +2654,7 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
     }
 
 
-    void Problem::icp_update(MeshTopology* top, bool alternating) {
+    void Problem::icp_update(int iteration, MeshTopology* top, bool alternating) {
         //return;
         InputParams& ip = inputParams;
         std::chrono::high_resolution_clock::time_point t1, t2;
@@ -2673,7 +2683,13 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             BarrierIndex varOffset = barriers.registration + i*ip.nverts;
             inputData.read(T,varOffset,ip.nverts);
             inputData.read(localPts,barriers.localRegistration + i*localPointCount,localPointCount);
-            surfaceState.setCurrentModel(i,T, localPts, true);
+            //surfaceState.setCurrentModel(i,T, localPts, true);
+			int current_person = corpora.scan_to_person_id[i];
+            if(corpora.person_fist[current_person] && iteration < ip.vertex_masking_end)
+                surfaceState.setCurrentModel(i, T, localPts, excludedVertices, true); //false
+            else
+                surfaceState.setCurrentModel(i, T, localPts, noExcludedVertices, true);             
+
             //TOC(std::string("DISCRETE UPDATE SET MODEL ")+std::to_string(i))
             //TIC
             //std::cout << "current model set" << std::endl;
@@ -2801,7 +2817,13 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             //inputData.read(T_old,varOffset,ip.nverts,false);
             inputData.read(localPts,barriers.localRegistration + i*localPointCount,localPointCount, false); //true
             //surfaceState.setCurrentModel(i,T_old, false);
-            surfaceState.setCurrentModel(i,T,localPts, false); //false
+            //surfaceState.setCurrentModel(i,T,localPts, false); //false
+			int current_person = corpora.scan_to_person_id[i];
+            if(corpora.person_fist[current_person] && iteration < ip.vertex_masking_end)
+                surfaceState.setCurrentModel(i, T, localPts, excludedVertices, true); //false
+            else
+                surfaceState.setCurrentModel(i, T, localPts, noExcludedVertices, true);             
+
             //std::cout << "current model set" << std::endl;
 
             //Matrix3X tangent; tangent.resize(3,ip.npoints);
@@ -2903,7 +2925,12 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             //std::cout << "Max R^3 Length: " << maxMetric << std::endl;
             //std::cout << "Face Jumps: " << faceJump << std::endl;
 
-            surfaceState.setCurrentModel(i,T, localPts, false);
+            //surfaceState.setCurrentModel(i,T, localPts, false);
+            if(corpora.person_fist[current_person] && iteration < ip.vertex_masking_end)
+                surfaceState.setCurrentModel(i, T, localPts, excludedVertices, false);
+            else
+                surfaceState.setCurrentModel(i, T, localPts, noExcludedVertices, false);             
+			
 			double average = 0.0;
             for(int p = 0; p < ip.npoints; p++) {
                 face_idx[i*ip.npoints+p] = surfacePoints[p].face;
@@ -2963,8 +2990,15 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             //inputData.read(T_old,varOffset,ip.nverts,false);
             inputData.read(localPts,barriers.localRegistration + i*localPointCount,localPointCount, true);
             //surfaceState.setCurrentModel(i,T_old, false);
-            surfaceState.setCurrentModel(i,T,localPts, true); //false
-            //std::cout << "current model set" << std::endl;
+            //surfaceState.setCurrentModel(i,T,localPts, true); //false
+   			int current_person = corpora.scan_to_person_id[i];
+            if(corpora.person_fist[current_person] && iteration < ip.vertex_masking_end)
+                surfaceState.setCurrentModel(i, T, localPts, excludedVertices, true); //false
+            else
+                surfaceState.setCurrentModel(i, T, localPts, noExcludedVertices, true);             
+         
+	
+			//std::cout << "current model set" << std::endl;
 
             //Matrix3X tangent; tangent.resize(3,ip.npoints);
 
@@ -3045,7 +3079,12 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             //std::cout << "Max R^3 Length: " << maxMetric << std::endl;
             //std::cout << "Face Jumps: " << faceJump << std::endl;
 
-            surfaceState.setCurrentModel(i,T, localPts, false);
+            //surfaceState.setCurrentModel(i,T, localPts, false);
+            if(corpora.person_fist[current_person] && iteration < ip.vertex_masking_end)
+                surfaceState.setCurrentModel(i, T, localPts, excludedVertices, true); //false
+            else
+                surfaceState.setCurrentModel(i, T, localPts, noExcludedVertices, true);             
+
 
             for(int p = 0; p < ip.npoints; p++) {
                 face_idx[i*ip.npoints+p] = surfacePoints[p].face;
@@ -3358,6 +3397,16 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             Matrix4X jointDistance;
             closestDeformJoints = top.findClosest(control_vertices, borderIndices, sparseWeights, &jointDistance);
         }
+		for(auto excluded_part : ip.exclude_icp_vertex_groups) {
+			for(size_t v : vertex_groups[excluded_part]) {
+				if(std::find(excludedVertices.begin(),
+					         excludedVertices.end(),
+							 v) == excludedVertices.end())
+				{
+					excludedVertices.push_back(v);
+				}
+			}
+		}
 
         Model model2, model3;
 
@@ -3474,7 +3523,7 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             inputData.checkpoint();
             manifold_update();
             propagateModel(&top);
-            icp_update(&top, false);
+            icp_update(0, &top, false);
             Opt_ProblemInit(state, plan, &optinput[0]);
             dumpModel(0,&top);
 
@@ -3557,7 +3606,7 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
                         //	}
                         //}
                         if(w_surface == 0 && i >= ip.iteration_data - 1) {
-                            icp_update(&top, i > 4*THRESH);
+                            icp_update(i, &top, i > 4*THRESH);
                         }
                         //if(w_surface > 0 && i % inputParams.alternating == 0) { //%5
                         //	icp_update(&top, false);

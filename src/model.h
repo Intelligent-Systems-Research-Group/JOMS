@@ -101,6 +101,8 @@ struct InputParams {
 	int iteration_data;
 	int max_vertex_ring;
 	int center_vertex_id;
+	int vertex_masking_end;
+	std::vector<std::string> exclude_icp_vertex_groups;
 	std::vector<std::string> camPaths;
 
 	std::string template_path;

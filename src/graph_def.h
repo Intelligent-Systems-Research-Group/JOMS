@@ -84,7 +84,9 @@ private:
     std::vector<int> labelSubdiv_idx;
 	std::vector<std::vector<int>> model2Data;
     std::map<std::string, std::vector<size_t>> marker_vertex_groups;
-
+	
+	std::vector<int> excludedVertices;
+	std::vector<int> noExcludedVertices;
     
     std::vector<MeshTopology> topologies;
     std::vector<Matrix3X> vmarkers;
@@ -177,7 +179,7 @@ private:
 	void reverse_icp_update(MeshTopology* top);
 
 
-    void icp_update(MeshTopology* top, bool alternating);
+    void icp_update(int iteration, MeshTopology* top, bool alternating);
 
 	void implicit_update(int iteration, int failCount, MeshTopology* top, bool fake);
 

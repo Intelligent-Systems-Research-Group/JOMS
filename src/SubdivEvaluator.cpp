@@ -315,6 +315,9 @@ void SubdivEvaluator::evaluatePtex(const Matrix3X& vert_coords,
 	evaluateSubdivSurface(vert_coords, controlVertexPtex, out_S,
 		out_dSdX, out_dSudX, out_dSvdX, out_Su, out_Sv, NULL, NULL, NULL, NULL, NULL, NULL,printDebug);
 }
+
+
+
 /*
 void SubdivEvaluator::move(const MeshTopology& mesh, const Matrix3X& vert_coords, const Matrix2X& du, Matrix2X* dir) {
 	Matrix3X out_S(3, controlVertexPtex.size());

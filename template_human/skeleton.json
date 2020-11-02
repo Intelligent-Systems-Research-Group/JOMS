@@ -1,0 +1,119 @@
+{
+	"part_names" : [
+                "m_chest",
+                "m_neck",
+                "m_head",
+                "m_rupperarm",
+                "m_rlowerarm",
+                "m_rhand",
+                "m_lupperarm",
+                "m_llowerarm",
+                "m_lhand",
+                "m_hip",
+                "m_pelvis",
+                "m_rupperleg",
+                "m_rlowerleg",
+                "m_rfoot",
+                "m_lupperleg",
+                "m_llowerleg",
+                "m_lfoot"
+            ],
+
+	"symmetry" : {
+		"m_chest" : "m_chest",
+		"m_neck" :  "m_neck",
+		"m_head" : "m_head",
+		"m_hip" :  "m_hip",
+		"m_pelvis" : "m_pelvis",
+
+		"m_rupperarm" : "m_lupperarm",
+		"m_rlowerarm" : "m_llowerarm",
+		"m_rhand" : "m_lhand",
+		"m_rupperleg" :  "m_lupperleg",
+		"m_rlowerleg" : "m_llowerleg",
+		"m_rfoot" : "m_lfoot",
+
+		"m_lupperarm" : "m_rupperarm",
+        "m_llowerarm" : "m_rlowerarm",
+        "m_lhand" : "m_rhand",
+        "m_lupperleg" :  "m_rupperleg",
+        "m_llowerleg" : "m_rlowerleg",
+        "m_lfoot" : "m_rfoot"
+
+	},
+            
+    "ancestors" : {
+                "m_chest" : "m_root",
+                "m_neck" : "m_chest",
+                "m_head" : "m_neck",
+
+                "m_rupperarm" : "m_chest" ,
+                "m_rlowerarm" : "m_rupperarm" ,
+                "m_rhand" : "m_rlowerarm" ,
+
+                "m_lupperarm" : "m_chest",
+                "m_llowerarm" : "m_lupperarm",
+                "m_lhand" : "m_llowerarm",
+
+                "m_hip" : "m_chest",
+                "m_pelvis" : "m_hip",
+
+                "m_rupperleg" : "m_pelvis",
+                "m_rlowerleg" : "m_rupperleg",
+                "m_rfoot" : "m_rlowerleg",
+
+                "m_lupperleg" : "m_pelvis",
+                "m_llowerleg" : "m_lupperleg",
+                "m_lfoot" : "m_llowerleg"
+
+            },
+            "influence" : {
+                "m_chest" : [ "m_root","m_neck","m_hip","m_pelvis" ],
+                "m_neck" : [ "m_chest","m_head","m_rupperarm","m_lupperarm" ],
+                "m_head" : [ "m_chest","m_neck","m_rupperarm","m_lupperarm" ],
+
+                "m_rupperarm" : [ "m_chest","m_hip","m_rlowerarm","m_neck" ],
+                "m_rlowerarm" : [ "m_rupperarm","m_chest","m_rhand","m_neck" ],
+                "m_rhand" : [ "m_rlowerarm","m_rupperarm","m_chest", "m_root" ],
+
+                "m_lupperarm" : [ "m_chest","m_hip","m_llowerarm","m_neck" ],
+                "m_llowerarm" : [ "m_lupperarm","m_chest","m_lhand","m_neck" ],
+                "m_lhand" : [ "m_llowerarm","m_lupperarm","m_chest", "m_root" ],
+
+                "m_hip" : [ "m_chest","m_pelvis","m_rupperleg","m_lupperleg" ] ,
+                "m_pelvis" : [ "m_hip","m_chest","m_rupperleg","m_lupperleg" ] ,
+                "m_rupperleg" : [ "m_pelvis","m_hip","m_rlowerleg","m_lupperleg" ] ,
+                "m_rlowerleg" : [ "m_pelvis","m_hip","m_rupperleg","m_rfoot" ] ,
+                "m_rfoot" : [ "m_pelvis","m_hip","m_rupperleg","m_rlowerleg" ] ,
+
+                "m_lupperleg" : [ "m_pelvis","m_hip","m_llowerleg","m_rupperleg" ] ,
+                "m_llowerleg" : [ "m_pelvis","m_hip","m_lupperleg","m_lfoot" ] ,
+                "m_lfoot" : [ "m_pelvis","m_hip","m_lupperleg","m_llowerleg" ] 
+            },
+            "rigid" :
+	        [
+                "m_neck",
+                "m_head",
+                "m_rlowerarm",
+                "m_rhand",
+                
+                "m_llowerarm",
+                "m_lhand",
+
+                "m_hip",
+                "m_pelvis",
+                "m_rupperleg",
+                "m_rlowerleg",
+                "m_rfoot",
+                "m_lupperleg",
+                "m_llowerleg",
+                "m_lfoot"
+            ],
+
+	"halfrigid" :
+   [
+                "m_neck",
+				"m_rhand",
+				"m_lhand"
+   ]
+}

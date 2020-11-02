@@ -43,6 +43,10 @@ int main(int argc, char* argv[]){
 	("V,max_vertex_ring","Max vertices on joint boundaries", cxxopts::value<int>())
 	("C,center_vertex_id","Center Vertex Id",cxxopts::value<int>())
 	("S,enable_symmetry","Enable symmetry",cxxopts::value<bool>()->default_value("false")->implicit_value("true"))
+	("E,exclude_icp_vertex_groups",
+		"Exclude chosen vertex groups for initial iterations",
+		cxxopts::value<std::vector<std::string>>())
+			//->default_value(std::vector<std::string>()))
 	("h,help", "Print usage")
   ;
     auto result = options.parse(argc, argv);
@@ -57,6 +61,8 @@ int main(int argc, char* argv[]){
 
     //HeapProfilerStart();
     InputParams params;
+	params.exclude_icp_vertex_groups = 
+        result["exclude_icp_vertex_groups"].as<std::vector<std::string>>();
 	params.center_vertex_id = result["center_vertex_id"].as<int>();
 	params.template_path = result["template_path"].as<std::string>();
     params.template_data_marker_path = params.template_path + "/markers_data2.txt";
@@ -109,6 +115,9 @@ int main(int argc, char* argv[]){
 	params.camPaths = {params.template_path+"/cameras.json",params.template_path+"/caesar_cameras.json"};
 	params.nviews = 8;
 	params.useTemporal = result["temporal_regularizer"].as<bool>();
+	params.vertex_masking_end = 90;
+	params.exclude_icp_vertex_groups = 
+		result["exclude_icp_vertex_groups"].as<std::vector<std::string>>();
 	//params.camPaths = {"template/cameras_faust.json"};
 	//params.nviews = 10;
 

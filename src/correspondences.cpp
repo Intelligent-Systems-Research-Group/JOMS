@@ -8,6 +8,7 @@ SurfaceState::SingleState::SingleState(int _index, SubdivEvaluator* eval, std::s
 	this->scan_normals = scan_normals;
 	this->npts = eval->controlVertexPtex.size();
     this->index = _index;
+	this->modelFaceMask.resize(this->mesh->num_faces());
 #ifndef USE_NORMAL
 	data.resize(npts, 3);
 #else
@@ -150,15 +151,31 @@ Scalar SurfaceState::SingleState::evaluateCurrent(int dataIndex, Vector2 u, int 
 #endif
 }
 
-void SurfaceState::SingleState::setCurrentModel(Matrix3X& pts, Matrix3X& localPts, bool rebuild_tree) {
+void SurfaceState::SingleState::setCurrentModel(Matrix3X& pts, Matrix3X& localPts, const std::vector<int>& excludedVertices, bool rebuild_tree) {
 
  	this->pts = pts;
     this->localPts = localPts;
+	for(int i = 0; i < this->mesh->num_faces();i++) {
+        this->modelFaceMask[i] = true;
+    }
+	mesh->computeMaskFaces(excludedVertices, &modelFaceMask);
+
+
 	Matrix3X outS, n;
     //std::cout << "Start Point Sampling" << std::endl;
 	readModelPoints(outS, n);
     //std::cout << "End Point Sampling" << std::endl;
 	data.block(0, 0, npts, 3) = w*outS.transpose();
+
+	//HACK: move masked sample points far away. This way, they will never be nearest neighbors
+	for(int i = 0; i < npts; i++) {
+		int face = eval->controlVertexPtex[i].face;
+		if(!this->modelFaceMask[face]) {
+			data(i,0) = 1000000;
+			data(i,1) = 1000000;
+			data(i,2) = 1000000;
+		}
+	}
 #ifdef USE_NORMAL
 	data.block(0, 3, npts, 3) = nw*n.transpose();
 #endif
@@ -239,7 +256,7 @@ bool SurfaceState::SingleState::discreteUpdate(int dataIndex, Vector2& out, int&
 		Vector2 utemp; utemp.setConstant(-1);
 		int ftemp = -1;
 		rayHitPos = rayTracer->shootNormals(query_pt, query_normal, &utemp, &ftemp);
-		if(ftemp >= 0) {
+		if(ftemp >= 0 && this->modelFaceMask[ftemp]) {
 			assert(out(0,0) >= 0.0 && out(0,0) <= 1.0 && out(1,0) >= 0.0 && out(1,0) <= 1.0);
 			assert(utemp(0,0) >= 0.0 && utemp(0,0) <= 1.0 && utemp(1,0) >= 0.0 && utemp(1,0) <= 1.0);
 			Scalar oldDist = evaluateCurrent(dataIndex, out, fout);
@@ -318,9 +335,10 @@ bool SurfaceState::SingleState::discreteUpdate(int dataIndex, Vector2& out, int&
            
 	}
 	
-	void SurfaceState::setCurrentModel(int stateId, Matrix3X& pts, Matrix3X& localPts, bool rebuild_tree) {
+	void SurfaceState::setCurrentModel(int stateId, Matrix3X& pts, Matrix3X& localPts, 
+		const std::vector<int>& excludedVertices, bool rebuild_tree) {
         //std::cout << "Set Model " << stateId << std::endl;
-		states[stateId].setCurrentModel(pts, localPts, rebuild_tree);
+		states[stateId].setCurrentModel(pts, localPts, excludedVertices, rebuild_tree);
 	}
 	
 	void SurfaceState::alternatingUpdate(int stateId, int dataIndex, Vector2 u, int f, Vector2 d, Vector2& out, int& fout) {

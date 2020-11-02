@@ -26,6 +26,7 @@ struct MeshTopology {
 	void initVertexToSurfaceCoordinate(int vidx, int& fidx, double &u, double& v);
 	std::map<std::pair<size_t, size_t>, double> calculateLaplaceWeights();
 	IMatrix4X findClosest(const Matrix3X& verts, const std::vector<std::vector<int>>& vgroups, const SparseMatrix&, Matrix4X* distance = NULL);
+	void computeMaskFaces(const std::vector<int>& invMaskedVertices, std::vector<bool>* outMaskedFaces);
 };
 
 void makeCube(MeshTopology* mesh, Matrix3X* verts);

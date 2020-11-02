@@ -563,6 +563,19 @@ IMatrix4X MeshTopology::findClosest(const Matrix3X& verts, const std::vector<std
 
 	return output;
 }
+
+void MeshTopology::computeMaskFaces(const std::vector<int>& invMaskedVertices, std::vector<bool>* outMaskedFaces) {
+	for(int i = 0; i < face_adj.cols(); i++) {
+		for(int j = 0; j < 4; j++) {
+			if(std::find(invMaskedVertices.begin(),invMaskedVertices.end(),
+				face_adj(j,i)) == invMaskedVertices.end())
+				continue;
+			(*outMaskedFaces)[i] = false;
+		}
+	}
+}
+
+
 const static Eigen::IOFormat XYZFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, " ", "\n");
 void dumpCloud(std::string name, int iter, const Matrix3X& cloud, const Matrix3X* normals) {
 	std::ofstream file(name + std::to_string(iter) + std::string(".xyz"));

@@ -14,7 +14,8 @@ public:
     virtual Vector3 moveTangent(int stateId, Vector2 u, int f, Vector2 d) = 0;
     virtual void alternatingUpdate(int stateId, int dataIndex,Vector2 u, int f, Vector2 d, Vector2& out, int& fout) = 0;
 	virtual bool discreteUpdate(int stateId, int dataIndex, Vector2& out, int& fout) = 0;
-	virtual void setCurrentModel(int stateId, Matrix3X& pts, Matrix3X& localPts, bool rebuild_tree) = 0;
+	virtual void setCurrentModel(int stateId, Matrix3X& pts, Matrix3X& localPts, 
+		const std::vector<int>& excludedVertices, bool rebuild_tree) = 0;
 	virtual MeshTopology* getTopology(int stateId) = 0;
 	virtual void disableRayTracing(int stateId) = 0;
 };
@@ -28,6 +29,7 @@ class SurfaceState : public ISurfaceState {
         Matrix3X localPts;
         MeshTopology resultTopology;
 		Matrix3X subdVertices;
+		std::vector<bool> modelFaceMask;
 		
 		MatrixX data;
 		Matrix3X* scan;
@@ -48,7 +50,8 @@ class SurfaceState : public ISurfaceState {
         virtual Vector3 moveTangent(Vector2 u, int f, Vector2 d);
 		virtual void readModelPoints(Matrix3X& outS, Matrix3X& n);
 		virtual Scalar evaluateCurrent(int dataIndex, Vector2 u, int face);
-		virtual void setCurrentModel(Matrix3X& pts, Matrix3X& localPts, bool rebuild_tree);
+		virtual void setCurrentModel(Matrix3X& pts, Matrix3X& localPts, 
+			const std::vector<int>& excludedVertices, bool rebuild_tree);
 		virtual void alternatingUpdate(int dataIndex, Vector2 u, int f, Vector2 d, Vector2& out, int& fout);
 		virtual bool discreteUpdate(int dataIndex, Vector2& out, int& fout);
 		virtual void disableRayTracing();
@@ -61,7 +64,8 @@ public:
 	virtual int move(int stateId, Vector2 u, int f, Vector2 d, Vector2& out, int& fout, Scalar* distance,
         std::vector<Vector3>* path = NULL);
     virtual Vector3 moveTangent(int stateId, Vector2 u, int f, Vector2 d);
-	virtual void setCurrentModel(int stateId, Matrix3X& pts,Matrix3X& localPts,  bool rebuild_tree);
+	virtual void setCurrentModel(int stateId, Matrix3X& pts, 
+		Matrix3X& localPts, const std::vector<int>& excludedVertices, bool rebuild_tree);
 	virtual void alternatingUpdate(int stateId, int dataIndex,Vector2 u, int f, Vector2 d, Vector2& out, int& fout);
 	virtual bool discreteUpdate(int stateId, int dataIndex, Vector2& out, int& fout);
 	virtual void disableRayTracing(int stateId);
