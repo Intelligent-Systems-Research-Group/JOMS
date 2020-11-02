@@ -126,7 +126,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
         initOpt();
 #endif
 
-        //exit(0);
 
         //corpora.scanCount.clear();
         //for(int i = 0; i < ip.npersons; i++) {
@@ -372,7 +371,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
                 readCloud(loadpath, &gtverts, NULL, 1, corpora.flipped[i]);
                 assert(gtverts.cols() ==  6890);
                 //std::cout << gtverts.transpose() << std::endl;
-                //exit(0);
             }
             readCloud(scanpath, &points, &normals, 1, corpora.flipped[i]); //,1, false
 
@@ -677,7 +675,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
 
 
 
-        //exit(1);
         std::cout << "Init Subdiv weights " << std::endl;
 
         barriers.subdivLabelWeights = BarrierIndex(D1);
@@ -832,7 +829,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             }
 			std::cout << std::endl;
         }
-		//exit(1);
         barriers.absolutePoseBase = barriers.poseBase + ip.nscans*ip.njoints;
         barriers.poseBaseMean =  barriers.absolutePoseBase + ip.nscans*ip.njoints;
         {
@@ -1102,7 +1098,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             }
 			std::cout << std::endl;
         }
-		//exit(1);
 
         barriers.pose = barriers.debugRegistration + inputParams.nlabels*inputParams.nscans;
         barriers.end1d = barriers.coeff + inputParams.npersons*inputParams.ncomp;
@@ -1189,7 +1184,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
         barriers.end3d = barriers.pshape + (inputParams.nverts)*inputParams.nscans;
         //barriers.end3d = barriers.pjoint + (inputParams.njoints)*inputParams.npersons; //inputParams.njoints+1
         //std::cout << barriers.end3d << ":" << std::endl;
-        //exit(-1);
 
         inputData.verifySize(
                 barriers.end3d,
@@ -1694,7 +1688,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
                 terms[tid].add(edge);
             }
         }
-		//exit(1);
     }
 
 	void Problem::createGroundRepelTerm(MeshTopology* top) {
@@ -1767,7 +1760,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
 
             }
         }
-        //exit(0);
 
     }
 
@@ -2014,7 +2006,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
                 person++;
             }
         }
-		//exit(1);
     }
     void Problem::linkVariableTerm() {
         int tid = termIdx++;
@@ -2043,7 +2034,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
         Opt_SetSolverParameter(state, plan, "lIterations", (void*)&nLinearIterations);
         Opt_SetSolverParameter(state, plan, "q_tolerance", (void*)&tol);
 		for(int i = 0; i < 5; i++) std::cout << dims[i] << std::endl;
-		//exit(0);
     }
 
     void Problem::prepare() {
@@ -3364,7 +3354,6 @@ Problem::Problem(const InputParams& ip, const Corpora& _corpora) : inputParams(i
             if(headVertices[i]) headCount++;
         }
         std::cout << "Head Vertex Count: " << headCount << std::endl;
-        //exit(0);
 
 
 #ifdef USE_MARKERS
