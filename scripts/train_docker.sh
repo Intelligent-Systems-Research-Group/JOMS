@@ -8,7 +8,3 @@ docker run --rm -it \
 --mount type=bind,source=$p/dataset,target=/human_trainer_dataset,readonly \
 --mount type=bind,source=$p/output,target=/output \
 joms/joms:latest bash
-#-e INI="$1" \
-#-e npersons="$2" \
-#-e nscans="$3" \
-#hypermod/trainer:latest bash
