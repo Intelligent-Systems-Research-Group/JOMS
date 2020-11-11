@@ -1,5 +1,5 @@
 # JOMS
-This repository contains an early version of the code for the paper [Joint Optimization for Multi-Person Shape Models from Markerless 3D-Scans](http://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123630035.pdf).
+This repository contains the code for the paper [Joint Optimization for Multi-Person Shape Models from Markerless 3D-Scans](http://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123630035.pdf).
 
 # Docker Runtime
 The Docker Runtime containing the documentation can be downloaded here:
