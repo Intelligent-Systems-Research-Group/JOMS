@@ -20,4 +20,4 @@ Bibtex:
 ```
 
 ## License
-JOMS - including source and trained models - is available for free non-commercial use under the provided [license](License.pdf). For commercial queries, contact isrg@hs-karlsruhe.de .
+JOMS - including source and trained models - is available free for non-commercial use under the provided [license](License.pdf). For commercial queries, contact isrg@hs-karlsruhe.de .
