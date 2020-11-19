@@ -7,7 +7,7 @@ The Docker Runtime containing the documentation can be downloaded here:
 > - https://github.com/Intelligent-Systems-Research-Group/JOMS-Environment
 
 ## Citation
-Please cite these papers in your publications if it helps your research.
+Please cite this papers if you have used JOMS.
 
 Bibtex:
 ```
